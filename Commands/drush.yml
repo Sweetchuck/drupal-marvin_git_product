@@ -1,0 +1,35 @@
+marvin_git:
+  hook:
+    commit-msg:
+      settings:
+        rules:
+          subject_line:
+            enabled: true
+            name: 'subject_line'
+            # @todo Check end of string or two new lines.
+            pattern: >
+              /^(Issue #[0-9]+ - \S.{2,})|(Merge( remote-tracking){0,1} branch '[^\\s]+?'(, '[^\\s]+?'){0,} into [^\\s]+?)(\\n|$)/u
+            description: >
+              Subject line contains reference to the issue number followed by at least three characters long description,
+              or the subject line is an automatically generated message for merge commits
+            examples:
+              common:
+                enabled: true
+                is_valid: true
+                example: 'Issue #42 - Something'
+              merge_local_single:
+                enabled: true
+                is_valid: true
+                example: "Merge branch 'issue-42' into master"
+              merge_local_multi:
+                enabled: true
+                is_valid: true
+                example: "Merge branch 'issue-42', 'issue-43' into master"
+              merge_remote_single:
+                enabled: true
+                is_valid: true
+                example: "Merge remote-tracking branch 'issue-42' into master"
+              merge_remote_multiple:
+                enabled: true
+                is_valid: true
+                example: "Merge remote-tracking branch 'issue-42', 'issue-43' into master"
