@@ -1,20 +1,29 @@
 <?php
 
-namespace Drush\Commands\marvin_product;
+declare(strict_types = 1);
 
-use Drush\Commands\marvin\GitHookCommandsBase;
+namespace Drush\Commands\marvin_git_product;
+
+use Drush\Commands\marvin_git\GitHookCommandsBase;
 use Robo\Collection\CollectionBuilder;
 
+/**
+ * Git hook related commands.
+ *
+ * All command is hidden, because no need to call them manually.
+ */
 class GitHookCommands extends GitHookCommandsBase {
 
   /**
    * Git hook callback command for "./.git/hooks/applypatch-msg".
    *
    * @command marvin:git-hook:applypatch-msg
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookApplyPatchMsg(string $commitMsgFileName): CollectionBuilder {
+  public function cmdApplyPatchMsgExecute(string $commitMsgFileName): CollectionBuilder {
     return $this->delegate('applypatch-msg', $commitMsgFileName);
   }
 
@@ -22,10 +31,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/commit-msg".
    *
    * @command marvin:git-hook:commit-msg
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookCommitMsg(string $commitMsgFileName): CollectionBuilder {
+  public function cmdCommitMsgExecute(string $commitMsgFileName): CollectionBuilder {
     return $this->delegate('commit-msg', $commitMsgFileName);
   }
 
@@ -33,10 +44,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/post-applypatch".
    *
    * @command marvin:git-hook:post-applypatch
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPostApplyPatch(): CollectionBuilder {
+  public function cmdPostApplyPatchExecute(): CollectionBuilder {
     return $this->delegate('post-applypatch');
   }
 
@@ -44,7 +57,9 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/post-checkout".
    *
    * @command marvin:git-hook:post-checkout
+   *
    * @bootstrap max
+   *
    * @hidden
    *
    * @todo Consider to change the @bootstrap to "none", because after `git
@@ -52,7 +67,7 @@ class GitHookCommands extends GitHookCommandsBase {
    *       (3rd-party packages aren't up to date; composer.lock).
    *       This can be true for other Git hooks as well.
    */
-  public function gitHookPostCheckout(string $refPrevious, string $refHead, bool $isBranchCheckout): CollectionBuilder {
+  public function cmdPostCheckoutExecute(string $refPrevious, string $refHead, bool $isBranchCheckout): CollectionBuilder {
     return $this->delegate('post-checkout', $refPrevious, $refHead, $isBranchCheckout);
   }
 
@@ -60,10 +75,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/post-commit".
    *
    * @command marvin:git-hook:post-commit
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPostCommit(): CollectionBuilder {
+  public function cmdPostCommitExecute(): CollectionBuilder {
     return $this->delegate('post-commit');
   }
 
@@ -71,10 +88,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/post-merge".
    *
    * @command marvin:git-hook:post-merge
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPostMerge(bool $isSquashMerge): CollectionBuilder {
+  public function cmdPostMergeExecute(bool $isSquashMerge): CollectionBuilder {
     return $this->delegate('post-merge', $isSquashMerge);
   }
 
@@ -82,10 +101,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/post-receive".
    *
    * @command marvin:git-hook:post-receive
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPostReceive(): CollectionBuilder {
+  public function cmdPostReceiveExecute(): CollectionBuilder {
     return $this->delegate('post-receive');
   }
 
@@ -93,10 +114,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/post-rewrite".
    *
    * @command marvin:git-hook:post-rewrite
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPostRewrite(string $commandType): CollectionBuilder {
+  public function cmdPostRewriteExecute(string $commandType): CollectionBuilder {
     return $this->delegate('post-rewrite', $commandType);
   }
 
@@ -104,10 +127,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/post-update".
    *
    * @command marvin:git-hook:post-update
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPostUpdate(array $refNames): CollectionBuilder {
+  public function cmdPostUpdateExecute(array $refNames): CollectionBuilder {
     return $this->delegate('post-update', $refNames);
   }
 
@@ -115,10 +140,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/apply-patch".
    *
    * @command marvin:git-hook:pre-applypatch
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPreApplyPatch(): CollectionBuilder {
+  public function cmdPreApplyPatchExecute(): CollectionBuilder {
     return $this->delegate('pre-applypatch');
   }
 
@@ -126,10 +153,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/pre-auto-gc".
    *
    * @command marvin:git-hook:pre-auto-gc
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPreAutoGc(): CollectionBuilder {
+  public function cmdPreAutoGcExecute(): CollectionBuilder {
     return $this->delegate('pre-auto-gc');
   }
 
@@ -137,10 +166,14 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/pre-commit".
    *
    * @command marvin:git-hook:pre-commit
+   *
    * @bootstrap max
+   *
    * @hidden
+   *
+   * @marvinInitLintReporters
    */
-  public function gitHookPreCommit(): CollectionBuilder {
+  public function cmdPreCommitExecute(): CollectionBuilder {
     return $this->delegate('pre-commit');
   }
 
@@ -148,10 +181,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/pre-push".
    *
    * @command marvin:git-hook:pre-push
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPrePush(string $remoteName, string $remoteUrl): CollectionBuilder {
+  public function cmdPrePushExecute(string $remoteName, string $remoteUrl): CollectionBuilder {
     return $this->delegate('pre-push', $remoteName, $remoteUrl);
   }
 
@@ -159,10 +194,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/pre-rebase".
    *
    * @command marvin:git-hook:pre-rebase
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPreRebase(string $upstream, ?string $branch = NULL): CollectionBuilder {
+  public function cmdPreRebaseExecute(string $upstream, ?string $branch = NULL): CollectionBuilder {
     return $this->delegate('pre-rebase', $upstream, $branch);
   }
 
@@ -170,10 +207,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/pre-receive".
    *
    * @command marvin:git-hook:pre-receive
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPreReceive(): CollectionBuilder {
+  public function cmdPreReceiveExecute(): CollectionBuilder {
     return $this->delegate('pre-receive');
   }
 
@@ -181,10 +220,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/prepare-commit-msg".
    *
    * @command marvin:git-hook:prepare-commit-msg
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPrepareCommitMsg(string $commitMsgFileName, string $messageSource = '', string $sha1 = ''): CollectionBuilder {
+  public function cmdPrepareCommitMsgExecute(string $commitMsgFileName, string $messageSource = '', string $sha1 = ''): CollectionBuilder {
     return $this->delegate('prepare-commit-msg', $commitMsgFileName, $messageSource, $sha1);
   }
 
@@ -192,10 +233,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/push-to-checkout".
    *
    * @command marvin:git-hook:push-to-checkout
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookPushToCheckout(string $newCommit): CollectionBuilder {
+  public function cmdPushToCheckoutExecute(string $newCommit): CollectionBuilder {
     return $this->delegate('push-to-checkout', $newCommit);
   }
 
@@ -203,10 +246,12 @@ class GitHookCommands extends GitHookCommandsBase {
    * Git hook callback command for "./.git/hooks/update".
    *
    * @command marvin:git-hook:update
+   *
    * @bootstrap max
+   *
    * @hidden
    */
-  public function gitHookUpdate(string $refName, string $oldObjectName, string $newObjectName): CollectionBuilder {
+  public function cmdUpdateExecute(string $refName, string $oldObjectName, string $newObjectName): CollectionBuilder {
     return $this->delegate('update', $refName, $oldObjectName, $newObjectName);
   }
 
